@@ -5,6 +5,12 @@ import Link from "next/link";
 import eaLogo from "../../public/assets/images/efektywny-altruizm-logo.svg";
 import eaLogoWhite from "../../public/assets/images/efektywny-altruizm-logo-white.svg";
 import NavbarLink from "./NavbarLink";
+import {
+  faFacebookSquare,
+  faLinkedinIn,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import NavbarSocialLink from "./NavbarSocialLink";
 
 const Navbar = () => {
   const [isExpanded, setExpanded] = useState(false);
@@ -73,14 +79,26 @@ const Navbar = () => {
           <NavbarLink destination="/act" title="Wspieraj" />
           <NavbarLink destination="/blog" title="Blog" />
           <NavbarLink destination="/contact" title="Kontakt" />
+          <NavbarSocialLink
+            destination="https://www.facebook.com/efektywnyaltruizmfundacja"
+            icon={faFacebookSquare}
+          />
+          <NavbarSocialLink
+            destination="https://www.linkedin.com/company/efektywnyaltruizm/"
+            icon={faLinkedinIn}
+          />
+          <NavbarSocialLink
+            destination="https://www.youtube.com/channel/UCj6HkTu_5nYypCRKc-7y27A"
+            icon={faYoutube}
+          />
         </div>
       </div>
       <div>
         <a
           href="#"
-          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+          className="p-8 bg-yellow-300 text-black text-xs w-full h-full font-bold uppercase font-sans"
         >
-          Przekaz darowiznę
+          Przekaż darowiznę
         </a>
       </div>
     </nav>

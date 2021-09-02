@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 const NavbarLink = ({ destination, title }) => {
   const router = useRouter();
-  console.log(router.pathname);
   return (
     <Link href={destination}>
       <a
