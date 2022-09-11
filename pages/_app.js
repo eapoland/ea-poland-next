@@ -9,6 +9,7 @@ import "../styles/globals.css";
 import "../styles/styles.css";
 import { appWithTranslation } from "next-i18next";
 import Footer from "../components/Footer";
+import NewsletterForm from "../components/NewsletterForm";
 
 config.autoAddCss = false;
 
@@ -31,7 +32,10 @@ function MyApp({ Component, pageProps }) {
     <div className="container mx-auto">
       <Navbar />
       <Component {...pageProps} />
-      <Footer />
+      <div className="grid grid-cols-1 lg:grid-cols-3">
+        <NewsletterForm />
+        <Footer />
+      </div>
     </div>
   );
 }

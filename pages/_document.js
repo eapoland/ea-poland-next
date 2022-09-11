@@ -109,7 +109,7 @@ class MyDocument extends Document {
             }}
           />
         </Head>
-        <body className="bg-red-300 h-screen">
+        <body className="h-screen">
           <Main />
           <NextScript />
         </body>

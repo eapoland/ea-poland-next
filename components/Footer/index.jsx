@@ -1,4 +1,5 @@
 import React from "react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import eaLogo from "../../public/assets/images/efektywny-altruizm-logo-white.svg";
 import Image from "next/image";
@@ -10,7 +11,7 @@ const Footer = () => {
   const router = useRouter();
 
   return (
-    <footer className="h-80 bg-primary p-8 flex gap-12">
+    <footer className="h-80 bg-primary font-sans p-8 flex gap-12 lg:col-start-1 lg:col-end-3 lg:row-start-1">
       <div className="flex-1 flex flex-col items-center md:items-start">
         <div>
           <Image
