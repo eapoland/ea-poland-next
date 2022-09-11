@@ -53,8 +53,10 @@ const Navbar = () => {
           <div className="hidden lg:block px-8  text-black text-xs font-bold uppercase font-sans">
             {t("donate")}
           </div>
-          <div className="block lg:hidden text-lg px-8">
-            <FontAwesomeIcon icon={faHeart} />
+          <div className="hidden sm:flex lg:hidden text-xs uppercase font-bold px-8 items-center gap-2">
+            <FontAwesomeIcon icon={faHeart} className="text-lg" />
+            {"  "}
+            {t("support")}
           </div>
         </a>
       </div>

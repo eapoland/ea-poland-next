@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import "../styles/styles.css";
 import { appWithTranslation } from "next-i18next";
+import Footer from "../components/Footer";
 
 config.autoAddCss = false;
 
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }) {
     <div className="container mx-auto">
       <Navbar />
       <Component {...pageProps} />
+      <Footer />
     </div>
   );
 }
