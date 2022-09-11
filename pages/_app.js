@@ -7,6 +7,7 @@ import * as ga from "../lib/ga";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import "../styles/styles.css";
+import { appWithTranslation } from "next-i18next";
 
 config.autoAddCss = false;
 
@@ -33,4 +34,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
