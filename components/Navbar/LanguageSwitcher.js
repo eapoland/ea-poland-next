@@ -24,7 +24,6 @@ const LanguageSwitcher = () => {
             width={20}
             height={15}
             alt="Switch to English"
-            className="shadow-lg"
           />
         ) : (
           <Image
@@ -32,7 +31,6 @@ const LanguageSwitcher = () => {
             width={20}
             height={15}
             alt="Zmień na polski"
-            style={{ borderRadius: "25px" }}
           />
         )}
       </div>
