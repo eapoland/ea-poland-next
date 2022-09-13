@@ -7,8 +7,8 @@ const NewsletterForm = () => {
   const [mail, setMail] = useState("");
 
   return (
-    <div className="bg-yellow-300 flex flex-col gap-6 justify-center items-center lg:col-start-3 py-20 lg:py-0">
-      <h4 className="text-center font-serif text-lg">{t("stay_in_contact")}</h4>
+    <div className="bg-secondary flex flex-col gap-6 justify-center items-center lg:col-start-3 py-20 lg:py-0">
+      <h4 className="text-center font-alt text-lg">{t("stay_in_contact")}</h4>
       <form className="flex">
         <input
           className="bg-white border-b-2 border-gray-400 pl-3 text-xs font-sans flex-1"

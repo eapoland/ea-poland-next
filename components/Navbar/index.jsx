@@ -44,7 +44,7 @@ const Navbar = () => {
           </a>
         </Link>
       </div>
-      <div className="lg:order-3 bg-yellow-300 flex items-center">
+      <div className="lg:order-3 bg-secondary flex items-center">
         <a
           href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=FFLJ8KDN5CAUA"
           target="_blank"
