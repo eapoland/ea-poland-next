@@ -73,7 +73,7 @@ const Footer = () => {
               </a>
             </li>
           </ul>
-          <p className="font-normal text-center font-bold md:text-left">
+          <p className="text-center font-bold md:text-left">
             © 2021 {t("fea")}
           </p>
         </div>

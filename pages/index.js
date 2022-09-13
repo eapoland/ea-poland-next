@@ -1,47 +1,69 @@
 import Head from "next/head";
-import Image from "next/image";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import ScrollToTop from "../components/ScrollToTop";
+import Hero from "../components/Hero";
+import ReactModal from "react-modal";
+import { Trans, useTranslation } from "next-i18next";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+ReactModal.setAppElement("body");
 
 export default function Home() {
+  const { t } = useTranslation("common");
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const modalShowed = window.sessionStorage.getItem("modal");
+    if (modalShowed == null) {
+      setIsOpen(true);
+      window.sessionStorage.setItem("modal", true);
+    }
+  }, []);
+
+  const toggleModal = () => setIsOpen(!isOpen);
+
   return (
     <div className="mt-20">
       <Head>
-        <title>Fundacja Efektywny Altruizm</title>
-        <meta name="description" content="Fundacja Efektywny Altruizm" />
+        <title>{t("fea")}</title>
+        <meta name="description" content={t("fea")} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        style={{
-          background: `linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.5452556022408963) 0%,
-          rgba(9, 9, 121, 0) 90%,
-          rgba(255, 255, 255, 0) 100%
-        ), url('/assets/images/baner_alt.jpg') center no-repeat`,
-          backgroundSize: "cover",
-        }}
-        className="w-full px-16 py-32 grid grid-cols-1 md:grid-cols-2"
+      <ScrollToTop />
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={toggleModal}
+        contentLabel="My dialog"
+        className="fixed -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 flex bg-white overflow-auto rounded outline-none p-5 w-full max-w-sm md:max-w-md"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+        closeTimeoutMS={500}
       >
-        <div className="text-white flex flex-col gap-4 items-start">
-          <h2 className="font-alt text-3xl lg:text-4xl leading-snug">
-            Jak przynieść światu
-            <br />
-            <b>najwięcej dobra?</b>
-          </h2>
-          <p className="text-sm leading-normal">
-            Jak czynić najwięcej dobra wykorzystując ograniczone środki?
-            Efektywny Altruizm szuka odpowiedzi na to pytanie.
-          </p>
-          <Link href="/whoweare">
+        <div>
+          <button
+            className="cursor-pointer px-2 py-1 rounded-lg border-0 absolute right-0 top-0 self-end"
+            onClick={toggleModal}
+          >
+            <FontAwesomeIcon icon={faXmark} size="2x" />
+          </button>
+          <h4 className="mb-3 mt-2 text-xl font-alt">
+            <Trans i18nKey="modal_header" />
+          </h4>
+          <div className="mb-6">
+            <Trans i18nKey="modal_content" />
+          </div>
+          <Link href="/blog/program-wprowadzajacy-do-ea">
             <a>
-              <button className="bg-primary py-3 px-7 text-sm uppercase font-bold">
-                Dowiedz się więcej
+              <button className="bg-primary py-3 px-7 text-sm uppercase font-bold text-white">
+                {t("modal_btn")}
               </button>
             </a>
           </Link>
         </div>
-      </div>
+      </ReactModal>
+      <Hero />
     </div>
   );
 }
