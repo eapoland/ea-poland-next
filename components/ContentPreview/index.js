@@ -13,7 +13,7 @@ const ContentPreview = () => {
       <div className="flex justify-center">
         <Image src={main1} alt="" objectFit="cover" />
       </div>
-      <div className="flex flex-col items-center justify-center gap-3 md:p-8 lg:p-12 md:items-start">
+      <div className="flex flex-col items-center justify-center gap-3 p-4 md:p-8 lg:p-12 md:items-start">
         <h3 className="font-alt text-xl lg:text-2xl xl:text-3xl">
           {t("what_is_ea")}
         </h3>
@@ -23,7 +23,7 @@ const ContentPreview = () => {
       <div className="flex justify-center md:row-start-2 md:col-start-2">
         <Image src={main2} alt="" objectFit="cover" />
       </div>
-      <div className="flex flex-col items-center justify-center gap-3 md:p-8 lg:p-12 md:items-start md:row-start-2 md:col-start-1">
+      <div className="flex flex-col items-center justify-center gap-3 p-4 md:p-8 lg:p-12 md:items-start md:row-start-2 md:col-start-1">
         <h3 className="font-alt text-xl lg:text-2xl xl:text-3xl">
           {t("how_do_we_work")}
         </h3>

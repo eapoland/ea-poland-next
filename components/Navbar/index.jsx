@@ -23,7 +23,7 @@ const Navbar = () => {
   const toggle = () => setExpanded(!isExpanded);
 
   return (
-    <nav className="top-0 fixed w-full xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md max-w-screen-sm h-20 mx-auto flex items-stretch justify-between flex-wrap p-0 transition duration-500 bg-white text-black">
+    <nav className="top-0 fixed w-full xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md max-w-screen-sm h-20 mx-auto flex items-stretch justify-between flex-wrap p-0 transition duration-500 bg-white text-black z-50">
       <div className="block lg:hidden">
         <button
           className="px-8 bg-white text-black text-xs w-full h-full"
