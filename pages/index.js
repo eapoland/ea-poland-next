@@ -10,6 +10,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Quote from "../components/Quote";
 import ContentPreview from "../components/ContentPreview";
+import Partners from "../components/Partners";
 
 ReactModal.setAppElement("body");
 
@@ -68,6 +69,7 @@ export default function Home() {
       <Hero />
       <Quote />
       <ContentPreview />
+      <Partners />
     </div>
   );
 }
