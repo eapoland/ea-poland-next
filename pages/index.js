@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Quote from "../components/Quote";
 
 ReactModal.setAppElement("body");
 
@@ -64,6 +65,7 @@ export default function Home() {
         </div>
       </ReactModal>
       <Hero />
+      <Quote />
     </div>
   );
 }
