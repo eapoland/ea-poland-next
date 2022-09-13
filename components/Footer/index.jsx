@@ -11,17 +11,17 @@ const Footer = () => {
   const router = useRouter();
 
   return (
-    <footer className="h-80 bg-primary font-sans p-8 flex gap-12 lg:col-start-1 lg:col-end-3 lg:row-start-1">
+    <footer className="bg-primary font-sans p-8 flex gap-12 lg:col-start-1 lg:col-end-3 lg:row-start-1">
       <div className="flex-1 flex flex-col items-center md:items-start">
         <div>
           <Image
             src={eaLogo}
             alt="Logo Efektywnego Altruizmu"
-            width={160}
-            height={120}
+            width={155}
+            height={90}
           />
         </div>
-        <div className="text-white uppercase text-xs">
+        <div className="text-white uppercase text-xs font-bold">
           <ul className="flex flex-wrap gap-4 mb-4 justify-center md:justify-start">
             <li>
               <Link href="/whoarewe">
@@ -73,13 +73,13 @@ const Footer = () => {
               </a>
             </li>
           </ul>
-          <p className="font-normal text-center md:text-left">
+          <p className="font-normal text-center font-bold md:text-left">
             © 2021 {t("fea")}
           </p>
         </div>
       </div>
       <div className="hidden md:flex flex-1 items-center">
-        <ul className="text-white uppercase text-xs flex flex-col gap-4">
+        <ul className="text-white uppercase font-bold text-xs flex flex-col gap-4">
           <li>Fundacja Efektywny Altruizm</li>
           <li>Plac Bankowy 2, 00-095 Warszawa</li>
           <li>KRS: 0000726237, REGON: 369951399, NIP: 5252746902</li>
