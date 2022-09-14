@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/image";
 import Slider from "react-slick";
 import client from "../../apollo-client";
 import Button from "../../components/Button";
@@ -26,7 +27,7 @@ export default function Blog({ blogData }) {
             key={post.slug}
           >
             <div
-              className="flex flex-col justify-center gap-4 items-start px-[6.25rem] h-[36.25rem]"
+              className="flex flex-col justify-center gap-4 items-start px-8 lg:px-[6.25rem] h-96 lg:h-[36.25rem]"
               style={{
                 backgroundImage: `linear-gradient(
                         180deg,
@@ -40,7 +41,7 @@ export default function Blog({ blogData }) {
               }}
             >
               <span className="flex items-center gap-4">
-                <img
+                <Image
                   className="w-10 rounded-full"
                   src={`https://ea-poland-wordpress.azurewebsites.net${
                     post.author.node.customuser.photo &&
