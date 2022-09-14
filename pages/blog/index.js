@@ -17,7 +17,6 @@ export default function Blog({ blogData }) {
     dots: true,
     arrows: false,
   };
-  console.log(blogData);
   return (
     <div className="mt-20">
       <Slider {...settings}>
