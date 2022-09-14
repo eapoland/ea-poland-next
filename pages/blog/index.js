@@ -1,11 +1,23 @@
 import { gql } from "@apollo/client";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
+import { useState } from "react";
 import Slider from "react-slick";
 import client from "../../apollo-client";
 import Button from "../../components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronRight,
+  faChevronLeft,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function Blog({ blogData }) {
+  const [query, setQuery] = useState("");
+  const { t } = useTranslation("common");
+
   const settings = {
     infinite: true,
     slidesToShow: 1,
@@ -27,7 +39,7 @@ export default function Blog({ blogData }) {
             key={post.slug}
           >
             <div
-              className="flex flex-col justify-center gap-4 items-start px-8 lg:px-[6.25rem] h-96 lg:h-[36.25rem]"
+              className="flex flex-col justify-center gap-4 items-start px-8 lg:px-[6.25rem] h-[30rem] lg:h-[36.25rem]"
               style={{
                 backgroundImage: `linear-gradient(
                         180deg,
@@ -70,6 +82,50 @@ export default function Blog({ blogData }) {
           </div>
         ))}
       </Slider>
+      <div className="grid grid-cols-1 lg:grid-cols-3">
+        <div className="lg:col-start-3 bg-red-200 p-4">
+          <form className="flex">
+            <input
+              className="bg-white border-b-2 border-gray-400 pl-3 text-xs font-sans flex-1"
+              id="search"
+              type="text"
+              aria-label="search query"
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button
+              className="bg-primary font-sans uppercase font-bold text-xs text-white shadow px-6 py-3"
+              type="submit"
+              // onClick={subscribe} route to the search result page with query as a param
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </form>
+        </div>
+        <div className="lg:col-start-3 bg-orange-200 flex flex-col gap-2 p-4">
+          <h3 className="uppercase font-bold text-lg">ZAGADNIENIA</h3>
+          {blogData.categories.nodes.map((category) => (
+            <Link href={`/blog/category/${category.slug}`} key={category.slug}>
+              <a>
+                <button
+                  className="w-full bg-mono p-4 uppercase font-bold"
+                  type="submit"
+                >
+                  <div className="flex justify-between items-center">
+                    <h5>{category.name}</h5>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                  </div>{" "}
+                </button>
+              </a>
+            </Link>
+          ))}
+        </div>
+        <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 bg-pink-300">
+          FIRST POST
+        </div>
+        <div className="lg:col-span-3 bg-yellow-200">POSTS</div>
+      </div>
     </div>
   );
 }
