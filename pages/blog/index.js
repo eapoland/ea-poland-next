@@ -82,8 +82,8 @@ export default function Blog({ blogData }) {
           </div>
         ))}
       </Slider>
-      <div className="grid grid-cols-1 lg:grid-cols-3">
-        <div className="lg:col-start-3 bg-red-200 p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 xl:px-16">
+        <div className="lg:col-start-3 p-4">
           <form className="flex">
             <input
               className="bg-white border-b-2 border-gray-400 pl-3 text-xs font-sans flex-1"
@@ -103,7 +103,7 @@ export default function Blog({ blogData }) {
             </button>
           </form>
         </div>
-        <div className="lg:col-start-3 bg-orange-200 flex flex-col gap-2 p-4">
+        <div className="lg:col-start-3 flex flex-col gap-2 p-4">
           <h3 className="uppercase font-bold text-lg">ZAGADNIENIA</h3>
           {blogData.categories.nodes.map((category) => (
             <Link href={`/blog/category/${category.slug}`} key={category.slug}>
@@ -121,10 +121,65 @@ export default function Blog({ blogData }) {
             </Link>
           ))}
         </div>
-        <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 bg-pink-300">
-          FIRST POST
+        <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 p-4 lg:p-8 flex items-center justify-center">
+          {blogData.posts.nodes[0] && (
+            <Link href={`/blog/${blogData.posts.nodes[0].slug}`}>
+              <a className="w-full">
+                <div
+                  style={{
+                    backgroundImage: `linear-gradient(
+                        0deg,
+                        rgba(0, 0, 0, 0.5452556022408963),
+                        rgba(0, 0, 0, 0.5452556022408963)
+                      ), url(https://ea-poland-wordpress.azurewebsites.net${blogData.posts.nodes[0].featuredImage.node.sourceUrl})`,
+                  }}
+                  className="flex flex-col justify-end w-full h-full lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
+                  key={blogData.posts.nodes[0].id}
+                >
+                  <h3 className="font-sans uppercase font-bold">
+                    {blogData.posts.nodes[0].categories.edges
+                      .filter((c) => c.isPrimary)
+                      .map((cat) => cat.node.name)}
+                  </h3>
+                  <h1 className="text-xl md:text-2xl font-alt">
+                    {blogData.posts.nodes[0].title}
+                  </h1>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: blogData.posts.nodes[0].excerpt,
+                    }}
+                    className="text-sm md:text-base"
+                  />
+                </div>
+              </a>
+            </Link>
+          )}
         </div>
-        <div className="lg:col-span-3 bg-yellow-200">POSTS</div>
+        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 grid-rows-6 lg:grid-rows-2 gap-4">
+          {blogData.posts.nodes.slice(1).map((post) => (
+            <Link href={`/blog/${post.slug}`} key={post.id}>
+              <a className="relative grid grid-cols-2">
+                <img
+                  src={`https://ea-poland-wordpress.azurewebsites.net${post.featuredImage.node.sourceUrl}`}
+                  alt={post.featuredImage.node.slug}
+                />
+                <div className="">
+                  <h3>
+                    {post.categories.edges
+                      .filter((c) => c.isPrimary)
+                      .map((cat) => cat.node.name)}
+                  </h3>
+                  <h2>{post.title}</h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: post.excerpt,
+                    }}
+                  />
+                </div>
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -172,6 +227,46 @@ export async function getStaticProps({ locale }) {
                 isPrimary
               }
             }
+          }
+        }
+        posts(first: 7) {
+          nodes {
+            author {
+              node {
+                customuser {
+                  photo {
+                    sourceUrl
+                  }
+                }
+                slug
+                name
+              }
+            }
+            featuredImage {
+              node {
+                sourceUrl
+                slug
+              }
+            }
+            excerpt(format: RENDERED)
+            slug
+            title(format: RENDERED)
+            id
+            categories {
+              edges {
+                node {
+                  id
+                  name
+                }
+                isPrimary
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            endCursor
+            startCursor
           }
         }
       }
