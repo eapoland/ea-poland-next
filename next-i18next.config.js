@@ -4,4 +4,5 @@ module.exports = {
     locales: ["pl", "en"],
   },
   ns: ["common"],
+  react: { useSuspense: false },
 };

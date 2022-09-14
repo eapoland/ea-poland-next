@@ -22,7 +22,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "#0b879d",
+        primary: "#0A6171",
         secondary: "#edcf00",
         mono: "#fafafa",
       },
@@ -31,5 +31,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
