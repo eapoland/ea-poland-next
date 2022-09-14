@@ -48,6 +48,8 @@ export default function Blog({ blogData }) {
                     post.author.node.customuser.photo.sourceUrl
                   }`}
                   alt={post.author.node.slug}
+                  width={40}
+                  height={40}
                 />
                 <p className="font-sans uppercase text-sm font-bold">
                   {post.author.node.name} /{" "}
