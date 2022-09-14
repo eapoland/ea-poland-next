@@ -23,3 +23,18 @@ html {
 *:after {
   box-sizing: inherit;
 }
+
+.slick-dots {
+  bottom: 1.25rem;
+}
+.slick-dots li button:before {
+  color: white;
+  font-size: 0.625rem;
+  opacity: 0.75;
+}
+
+.slick-dots li.slick-active button:before {
+  color: white;
+  font-size: 0.875rem;
+  opacity: 1;
+}
