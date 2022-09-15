@@ -25,6 +25,7 @@ module.exports = {
         primary: "#0A6171",
         secondary: "#edcf00",
         mono: "#fafafa",
+        link: "#007bff",
       },
     },
   },
