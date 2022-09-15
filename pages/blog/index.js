@@ -133,7 +133,7 @@ export default function Blog({ blogData }) {
                         rgba(0, 0, 0, 0.5452556022408963)
                       ), url(https://ea-poland-wordpress.azurewebsites.net${blogData.posts.nodes[0].featuredImage.node.sourceUrl})`,
                   }}
-                  className="flex flex-col justify-end w-full h-full lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
+                  className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
                   key={blogData.posts.nodes[0].id}
                 >
                   <h3 className="font-sans uppercase font-bold">
@@ -141,39 +141,46 @@ export default function Blog({ blogData }) {
                       .filter((c) => c.isPrimary)
                       .map((cat) => cat.node.name)}
                   </h3>
-                  <h1 className="text-xl md:text-2xl font-alt">
+                  <h1 className="text-lg md:text-2xl font-alt">
                     {blogData.posts.nodes[0].title}
                   </h1>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: blogData.posts.nodes[0].excerpt,
                     }}
-                    className="text-sm md:text-base"
+                    className="text-sm md:text-base text-ellipsis"
                   />
                 </div>
               </a>
             </Link>
           )}
         </div>
-        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 grid-rows-6 lg:grid-rows-2 gap-4">
+        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4">
           {blogData.posts.nodes.slice(1).map((post) => (
-            <Link href={`/blog/${post.slug}`} key={post.id}>
-              <a className="relative grid grid-cols-2">
-                <img
-                  src={`https://ea-poland-wordpress.azurewebsites.net${post.featuredImage.node.sourceUrl}`}
-                  alt={post.featuredImage.node.slug}
-                />
-                <div className="">
-                  <h3>
+            <Link href={`/blog/${post.slug}`} key={post.slug}>
+              <a className="w-full">
+                <div
+                  style={{
+                    backgroundImage: `linear-gradient(
+                        0deg,
+                        rgba(0, 0, 0, 0.5452556022408963),
+                        rgba(0, 0, 0, 0.5452556022408963)
+                      ), url(https://ea-poland-wordpress.azurewebsites.net${post.featuredImage.node.sourceUrl})`,
+                  }}
+                  className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 xl:p-8 text-white"
+                  key={post.id}
+                >
+                  <h3 className="font-sans uppercase font-bold">
                     {post.categories.edges
                       .filter((c) => c.isPrimary)
                       .map((cat) => cat.node.name)}
                   </h3>
-                  <h2>{post.title}</h2>
+                  <h1 className="text-lg md:text-2xl font-alt">{post.title}</h1>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: post.excerpt,
                     }}
+                    className="text-sm md:text-base text-ellipsis"
                   />
                 </div>
               </a>
