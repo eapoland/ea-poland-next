@@ -1,10 +1,8 @@
-import { gql } from "@apollo/client";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
-import client from "../../apollo-client";
 import Button from "../../components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,10 +11,63 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { getBlogMainData, getBlogPosts } from "../../lib/cms/cms";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_POSTS = gql`
+  query GET_DATA($first: Int, $last: Int, $after: String, $before: String) {
+    posts(first: $first, last: $last, after: $after, before: $before) {
+      nodes {
+        author {
+          node {
+            customuser {
+              photo {
+                sourceUrl
+              }
+            }
+            slug
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            slug
+          }
+        }
+        excerpt(format: RENDERED)
+        slug
+        title(format: RENDERED)
+        id
+        categories {
+          edges {
+            node {
+              id
+              name
+            }
+            isPrimary
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+        startCursor
+      }
+    }
+  }
+`;
 
 export default function Blog({ blogData }) {
   const [query, setQuery] = useState("");
   const { t } = useTranslation("common");
+  const { data, loading, fetchMore } = useQuery(GET_POSTS, {
+    variables: { first: 7, last: null, after: null, before: null },
+  });
+
+  const updateQuery = (previousResult, { fetchMoreResult }) =>
+    fetchMoreResult.posts.nodes.length ? fetchMoreResult : previousResult;
 
   const settings = {
     infinite: true,
@@ -121,169 +172,145 @@ export default function Blog({ blogData }) {
             </Link>
           ))}
         </div>
-        <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 p-4 lg:p-8 flex items-center justify-center">
-          {blogData.posts.nodes[0] && (
-            <Link href={`/blog/${blogData.posts.nodes[0].slug}`}>
-              <a className="w-full">
-                <div
-                  style={{
-                    backgroundImage: `linear-gradient(
+        {loading ? (
+          <div>Loading</div>
+        ) : (
+          <>
+            <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 p-4 lg:p-8 flex items-center justify-center">
+              {data.posts.nodes[0] && (
+                <Link href={`/blog/${data.posts.nodes[0].slug}`}>
+                  <a className="w-full">
+                    <div
+                      style={{
+                        backgroundImage: `linear-gradient(
                         0deg,
                         rgba(0, 0, 0, 0.5452556022408963),
                         rgba(0, 0, 0, 0.5452556022408963)
-                      ), url(https://ea-poland-wordpress.azurewebsites.net${blogData.posts.nodes[0].featuredImage.node.sourceUrl})`,
-                  }}
-                  className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
-                  key={blogData.posts.nodes[0].id}
-                >
-                  <h3 className="font-sans uppercase font-bold">
-                    {blogData.posts.nodes[0].categories.edges
-                      .filter((c) => c.isPrimary)
-                      .map((cat) => cat.node.name)}
-                  </h3>
-                  <h1 className="text-lg md:text-2xl font-alt">
-                    {blogData.posts.nodes[0].title}
-                  </h1>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: blogData.posts.nodes[0].excerpt,
-                    }}
-                    className="text-sm md:text-base text-ellipsis"
-                  />
-                </div>
-              </a>
-            </Link>
-          )}
-        </div>
-        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4">
-          {blogData.posts.nodes.slice(1).map((post) => (
-            <Link href={`/blog/${post.slug}`} key={post.slug}>
-              <a className="w-full">
-                <div
-                  style={{
-                    backgroundImage: `linear-gradient(
+                      ), url(https://ea-poland-wordpress.azurewebsites.net${data.posts.nodes[0].featuredImage.node.sourceUrl})`,
+                      }}
+                      className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
+                      key={data.posts.nodes[0].id}
+                    >
+                      <h3 className="font-sans uppercase font-bold">
+                        {data.posts.nodes[0].categories.edges
+                          .filter((c) => c.isPrimary)
+                          .map((cat) => cat.node.name)}
+                      </h3>
+                      <h1 className="text-lg md:text-2xl font-alt">
+                        {data.posts.nodes[0].title}
+                      </h1>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: data.posts.nodes[0].excerpt,
+                        }}
+                        className="text-sm md:text-base text-ellipsis"
+                      />
+                    </div>
+                  </a>
+                </Link>
+              )}
+            </div>
+            <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4">
+              {data.posts.nodes.slice(1).map((post) => (
+                <Link href={`/blog/${post.slug}`} key={post.slug}>
+                  <a className="w-full">
+                    <div
+                      style={{
+                        backgroundImage: `linear-gradient(
                         0deg,
                         rgba(0, 0, 0, 0.5452556022408963),
                         rgba(0, 0, 0, 0.5452556022408963)
                       ), url(https://ea-poland-wordpress.azurewebsites.net${post.featuredImage.node.sourceUrl})`,
+                      }}
+                      className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 xl:p-8 text-white"
+                      key={post.id}
+                    >
+                      <h3 className="font-sans uppercase font-bold">
+                        {post.categories.edges
+                          .filter((c) => c.isPrimary)
+                          .map((cat) => cat.node.name)}
+                      </h3>
+                      <h1 className="text-lg md:text-2xl font-alt">
+                        {post.title}
+                      </h1>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: post.excerpt,
+                        }}
+                        className="text-sm md:text-base text-ellipsis"
+                      />
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+            <div className="my-8 mx-4 flex justify-between lg:col-span-3 col-span-1 ">
+              {data.posts.pageInfo.hasNextPage ? (
+                <button
+                  className="flex items-center bg-slate-200 uppercase font-bold text-sm px-4 py-2 gap-2"
+                  type="button"
+                  onClick={() => {
+                    fetchMore({
+                      variables: {
+                        first: 7,
+                        after: data.posts.pageInfo.endCursor || null,
+                        last: null,
+                        before: null,
+                      },
+                      updateQuery,
+                    });
                   }}
-                  className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 xl:p-8 text-white"
-                  key={post.id}
                 >
-                  <h3 className="font-sans uppercase font-bold">
-                    {post.categories.edges
-                      .filter((c) => c.isPrimary)
-                      .map((cat) => cat.node.name)}
-                  </h3>
-                  <h1 className="text-lg md:text-2xl font-alt">{post.title}</h1>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: post.excerpt,
-                    }}
-                    className="text-sm md:text-base text-ellipsis"
-                  />
-                </div>
-              </a>
-            </Link>
-          ))}
-        </div>
+                  <div>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                  </div>
+                  <h6>Starsze wpisy</h6>
+                </button>
+              ) : null}
+              {data.posts.pageInfo.hasPreviousPage ? (
+                <button
+                  className="flex items-center bg-slate-200 uppercase font-bold text-sm px-4 py-2 gap-2"
+                  type="button"
+                  onClick={() => {
+                    fetchMore({
+                      variables: {
+                        first: null,
+                        after: null,
+                        last: 7,
+                        before: data.posts.pageInfo.startCursor || null,
+                      },
+                      updateQuery,
+                    });
+                  }}
+                >
+                  <h6>Nowsze wpisy</h6>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+              ) : null}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export async function getStaticProps({ locale }) {
-  const { data } = await client.query({
-    query: gql`
-      query GET_DATA {
-        categories(where: { parent: null }) {
-          nodes {
-            id
-            slug
-            name
-          }
-        }
-        recommendedPosts: posts(where: { tag: "polecane" }) {
-          nodes {
-            author {
-              node {
-                customuser {
-                  photo {
-                    sourceUrl
-                  }
-                }
-                slug
-                name
-              }
-            }
-            featuredImage {
-              node {
-                sourceUrl
-              }
-            }
-            excerpt(format: RENDERED)
-            slug
-            title(format: RENDERED)
-            id
-            categories {
-              edges {
-                node {
-                  id
-                  name
-                }
-                isPrimary
-              }
-            }
-          }
-        }
-        posts(first: 7) {
-          nodes {
-            author {
-              node {
-                customuser {
-                  photo {
-                    sourceUrl
-                  }
-                }
-                slug
-                name
-              }
-            }
-            featuredImage {
-              node {
-                sourceUrl
-                slug
-              }
-            }
-            excerpt(format: RENDERED)
-            slug
-            title(format: RENDERED)
-            id
-            categories {
-              edges {
-                node {
-                  id
-                  name
-                }
-                isPrimary
-              }
-            }
-          }
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            endCursor
-            startCursor
-          }
-        }
-      }
-    `,
+  const { data } = await getBlogPosts({
+    first: 7,
+    last: null,
+    after: null,
+    before: null,
   });
+  const main = await getBlogMainData();
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      blogData: data,
+      posts: data.posts,
+      blogData: main.data,
     },
   };
 }

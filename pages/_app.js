@@ -10,6 +10,8 @@ import "../styles/styles.css";
 import { appWithTranslation } from "next-i18next";
 import Footer from "../components/Footer";
 import NewsletterForm from "../components/NewsletterForm";
+import { ApolloProvider } from "@apollo/client";
+import client from "../apollo-client";
 
 config.autoAddCss = false;
 
@@ -29,9 +31,11 @@ function MyApp({ Component, pageProps }) {
   }, [router.events]);
 
   return (
-    <div className="container mx-auto">
+    <div className="max-w-full xl:max-w-screen-xl mx-auto">
       <Navbar />
-      <Component {...pageProps} />
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
       <div className="grid grid-cols-1 lg:grid-cols-3">
         <NewsletterForm />
         <Footer />
