@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+const year = new Date().getFullYear();
+
 const Footer = () => {
   const { t } = useTranslation("common");
   const router = useRouter();
@@ -73,7 +75,7 @@ const Footer = () => {
             </li>
           </ul>
           <p className="text-center font-bold md:text-left">
-            © 2021 {t("fea")}
+            © {year} {t("fea")}
           </p>
         </div>
       </div>
