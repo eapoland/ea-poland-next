@@ -23,48 +23,32 @@ const Footer = () => {
         <div className="text-white uppercase text-xs font-bold">
           <ul className="flex flex-wrap gap-4 mb-4 justify-center md:justify-start">
             <li>
-              <Link href="/whoarewe">
-                <a>{t("who_are_we")}</a>
-              </Link>
+              <Link href="/whoarewe">{t("who_are_we")}</Link>
             </li>
             <li>
-              <Link href="/aboutea">
-                <a>{t("aboutea")}</a>
-              </Link>
+              <Link href="/aboutea">{t("aboutea")}</Link>
             </li>
             {router.locale === "pl" && (
               <li>
-                <Link href="/ouractivities">
-                  <a>{t("our_activities")}</a>
-                </Link>
+                <Link href="/ouractivities">{t("our_activities")}</Link>
               </li>
             )}
             <li>
-              <Link href="/team">
-                <a>{t("team")}</a>
-              </Link>
+              <Link href="/team">{t("team")}</Link>
             </li>
             <li>
-              <Link href="/blog">
-                <a>{t("blog")}</a>
-              </Link>
+              <Link href="/blog">{t("blog")}</Link>
             </li>
             {router.locale === "pl" && (
               <li>
-                <Link href="/act">
-                  <a>{t("support")}</a>
-                </Link>
+                <Link href="/act">{t("support")}</Link>
               </li>
             )}
             <li>
-              <Link href="/contact">
-                <a>{t("contact")}</a>
-              </Link>
+              <Link href="/contact">{t("contact")}</Link>
             </li>
             <li>
-              <Link href="/privacy-policy">
-                <a>{t("policy_privacy")}</a>
-              </Link>
+              <Link href="/privacy-policy">{t("policy_privacy")}</Link>
             </li>
             <li>
               <a href="https://drive.google.com/drive/folders/10TgWw_2vMKzcbRUn1HpMsqgmwoW9Dy0l?usp=sharing">

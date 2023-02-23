@@ -57,12 +57,10 @@ export default function Home() {
           <div className="mb-6">
             <Trans i18nKey="modal_content" />
           </div>
-          <Link href="/blog/program-wprowadzajacy-do-ea">
-            <a>
-              <button className="bg-primary py-3 px-7 text-sm uppercase font-bold text-white">
-                {t("modal_btn")}
-              </button>
-            </a>
+          <Link href="/blog/program-wprowadzajacy-do-ea" passHref>
+            <button className="bg-primary py-3 px-7 text-sm uppercase font-bold text-white">
+              {t("modal_btn")}
+            </button>
           </Link>
         </div>
       </ReactModal>

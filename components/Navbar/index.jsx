@@ -32,15 +32,13 @@ const Navbar = () => {
         </button>
       </div>
       <div className="flex items-center flex-shrink-0  mr-6 ml-4 lg:order-1">
-        <Link href="/">
-          <a className="relative w-40 h-16">
-            <Image
-              src={eaLogo}
-              alt="Logo Efektywnego Altruizmu"
-              layout="fill"
-              objectFit="cover"
-            />
-          </a>
+        <Link href="/" className="relative w-40 h-16" passHref>
+          <Image
+            src={eaLogo}
+            alt="Logo Efektywnego Altruizmu"
+            layout="fill"
+            objectFit="cover"
+          />
         </Link>
       </div>
       <div className="lg:order-3 bg-secondary flex items-center">

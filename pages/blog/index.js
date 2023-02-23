@@ -157,18 +157,20 @@ export default function Blog({ blogData }) {
         <div className="lg:col-start-3 flex flex-col gap-2 p-4">
           <h3 className="uppercase font-bold text-lg">ZAGADNIENIA</h3>
           {blogData.categories.nodes.map((category) => (
-            <Link href={`/blog/category/${category.slug}`} key={category.slug}>
-              <a>
-                <button
-                  className="w-full bg-mono p-4 uppercase font-bold"
-                  type="submit"
-                >
-                  <div className="flex justify-between items-center">
-                    <h5>{category.name}</h5>
-                    <FontAwesomeIcon icon={faChevronRight} />
-                  </div>{" "}
-                </button>
-              </a>
+            <Link
+              href={`/blog/category/${category.slug}`}
+              key={category.slug}
+              passHref
+            >
+              <button
+                className="w-full bg-mono p-4 uppercase font-bold"
+                type="submit"
+              >
+                <div className="flex justify-between items-center">
+                  <h5>{category.name}</h5>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </div>{" "}
+              </button>
             </Link>
           ))}
         </div>
@@ -178,69 +180,74 @@ export default function Blog({ blogData }) {
           <>
             <div className="lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-end-3 p-4 lg:p-8 flex items-center justify-center">
               {data.posts.nodes[0] && (
-                <Link href={`/blog/${data.posts.nodes[0].slug}`}>
-                  <a className="w-full">
-                    <div
-                      style={{
-                        backgroundImage: `linear-gradient(
+                <Link
+                  href={`/blog/${data.posts.nodes[0].slug}`}
+                  className="w-full"
+                  passHref
+                >
+                  <div
+                    style={{
+                      backgroundImage: `linear-gradient(
                         0deg,
                         rgba(0, 0, 0, 0.5452556022408963),
                         rgba(0, 0, 0, 0.5452556022408963)
                       ), url(https://ea-poland-wordpress.azurewebsites.net${data.posts.nodes[0].featuredImage.node.sourceUrl})`,
+                    }}
+                    className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
+                    key={data.posts.nodes[0].id}
+                  >
+                    <h3 className="font-sans uppercase font-bold">
+                      {data.posts.nodes[0].categories.edges
+                        .filter((c) => c.isPrimary)
+                        .map((cat) => cat.node.name)}
+                    </h3>
+                    <h1 className="text-lg md:text-2xl font-alt">
+                      {data.posts.nodes[0].title}
+                    </h1>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: data.posts.nodes[0].excerpt,
                       }}
-                      className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 text-white"
-                      key={data.posts.nodes[0].id}
-                    >
-                      <h3 className="font-sans uppercase font-bold">
-                        {data.posts.nodes[0].categories.edges
-                          .filter((c) => c.isPrimary)
-                          .map((cat) => cat.node.name)}
-                      </h3>
-                      <h1 className="text-lg md:text-2xl font-alt">
-                        {data.posts.nodes[0].title}
-                      </h1>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: data.posts.nodes[0].excerpt,
-                        }}
-                        className="text-sm md:text-base text-ellipsis"
-                      />
-                    </div>
-                  </a>
+                      className="text-sm md:text-base text-ellipsis"
+                    />
+                  </div>
                 </Link>
               )}
             </div>
             <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4">
               {data.posts.nodes.slice(1).map((post) => (
-                <Link href={`/blog/${post.slug}`} key={post.slug}>
-                  <a className="w-full">
-                    <div
-                      style={{
-                        backgroundImage: `linear-gradient(
+                <Link
+                  href={`/blog/${post.slug}`}
+                  key={post.slug}
+                  className="w-full"
+                  passHref
+                >
+                  <div
+                    style={{
+                      backgroundImage: `linear-gradient(
                         0deg,
                         rgba(0, 0, 0, 0.5452556022408963),
                         rgba(0, 0, 0, 0.5452556022408963)
                       ), url(https://ea-poland-wordpress.azurewebsites.net${post.featuredImage.node.sourceUrl})`,
+                    }}
+                    className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 xl:p-8 text-white"
+                    key={post.id}
+                  >
+                    <h3 className="font-sans uppercase font-bold">
+                      {post.categories.edges
+                        .filter((c) => c.isPrimary)
+                        .map((cat) => cat.node.name)}
+                    </h3>
+                    <h1 className="text-lg md:text-2xl font-alt">
+                      {post.title}
+                    </h1>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: post.excerpt,
                       }}
-                      className="flex flex-col justify-end w-full h-[20rem] lg:h-[30rem] gap-4 rounded-lg px-8 py-16 md:px-16 md:py-24 xl:p-8 text-white"
-                      key={post.id}
-                    >
-                      <h3 className="font-sans uppercase font-bold">
-                        {post.categories.edges
-                          .filter((c) => c.isPrimary)
-                          .map((cat) => cat.node.name)}
-                      </h3>
-                      <h1 className="text-lg md:text-2xl font-alt">
-                        {post.title}
-                      </h1>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: post.excerpt,
-                        }}
-                        className="text-sm md:text-base text-ellipsis"
-                      />
-                    </div>
-                  </a>
+                      className="text-sm md:text-base text-ellipsis"
+                    />
+                  </div>
                 </Link>
               ))}
             </div>
