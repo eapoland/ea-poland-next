@@ -15,6 +15,7 @@ export async function getStaticPaths({ locales }) {
         }
       }
     `,
+    fallback: "blocking",
   });
 
   const paths = [];
@@ -137,5 +138,6 @@ export async function getStaticProps({ params, locale }) {
       ...(await serverSideTranslations(locale, ["common"])),
       postData: data.post,
     },
+    revalidate: 60,
   };
 }
