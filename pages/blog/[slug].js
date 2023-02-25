@@ -136,7 +136,13 @@ export async function getStaticProps({ params, locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      postData: data.post,
+      postData: {
+        ...data.post,
+        content: data.post.content.replace(
+          /\/wp-content\/uploads/g,
+          "https://ea-poland-wordpress.azurewebsites.net/wp-content/uploads"
+        ),
+      },
     },
     revalidate: 60,
   };
